@@ -7,7 +7,7 @@
 typedef int(*MatchFunc)(void*,void*);
 typedef void(*ElementProcessor)(void *);
 typedef void(*ConvertFunc)(void*,void*,void*);
-typedef void(*Reducer)(void* hint, void* previousItem, void* item);
+typedef void*(*Reducer)(void*,void*,void*);
 
 typedef struct element{
 	int index;

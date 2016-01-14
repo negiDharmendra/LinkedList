@@ -10,7 +10,7 @@ return list;
 
 int is_empty(LinkedList *list){
 	return (list->length==0);
-}
+};
 
 int add_to_list(LinkedList *list,void *data){
 	Element *e = (Element *)malloc(sizeof(Element));
@@ -87,8 +87,6 @@ void *deleteAtFirst(LinkedList *list){
 	return deletedElement;
 };
 
-
-
 void * deleteElementAt(LinkedList *list, int index){
 	Element *element = list->first;
 	void * deletedElement = NULL;
@@ -109,7 +107,6 @@ void * deleteElementAt(LinkedList *list, int index){
 	return deletedElement;
 };
 
-
 int asArray(LinkedList list, void ** arr, int maxElements){
 	Element *element = list.first;
 	size_t i = 0; 
@@ -118,8 +115,7 @@ int asArray(LinkedList list, void ** arr, int maxElements){
 		element=element->next; 
 	}
 	return i;
-}
-
+};
 
 LinkedList filter(LinkedList src, MatchFunc match, void *hint){
 	LinkedList list = createList();
@@ -157,17 +153,24 @@ LinkedList reverse(LinkedList src){
 	return list;
 };
 
-
 LinkedList map(LinkedList src, ConvertFunc convert, void *hint ){
 	Element *element = src.first;
-	LinkedList list = src;
-	Element *e = list.first;
+	LinkedList list = createList();
+	void *data;
 	while(element){
-		convert(hint,element->data,e->data);
-		e=e->next;
+		data = malloc(sizeof(void *));
+		convert(hint,element->data,data);
+		add_to_list(&list,data);
 		element=element->next;
 	};
 	return list;
-}
+};
 
-
+void *reduce(LinkedList list, Reducer reducer, void *hint, void *initialValue){
+	Element *element = list.first;
+	while(element){
+		initialValue = reducer(hint,initialValue,element->data);
+		element=element->next;
+	};
+	return initialValue;
+};
